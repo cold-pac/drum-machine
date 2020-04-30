@@ -4,58 +4,70 @@ import './App.css';
 const keys = "qweasdzxc";
 
 let Slider = (props) => {
-  let [powerOn, setPowerOn] = useState(true);
-  let barHandleClick = () => {
-    setPowerOn(!powerOn);
-  }
-  return (
+    return (  
     <div className = "slider">
       <div className = "sliderHeader">{props.heading}</div>
-      <div className = {powerOn?"sliderBar":"sliderBar power-off"} onClick = {barHandleClick}>
+      <div className = {props.sliderOn?"sliderBar":"sliderBar power-off"} onClick = {props.sliderClick}>
         <div className = "sliderCircle"></div>
       </div>
     </div>
   );
 }
 
-let keyMap = {
-  'Q': 'Beat01a',
-  'W': 'Check_your_answers',
-  'E': 'Cowbell',
-  'A': 'HiHat', 
-  'S': 'Rim Shot', 
-  'D': 'Snare',
-  'Z': 'Tamb 1',
-  'X': 'Motorway',
-  'C': 'FX'
+let keyMap1 = {
+  'Q': 'Beat01a.mp3',
+  'W': 'Check_your_answers.mp3',
+  'E': 'Cowbell.wav',
+  'A': 'HiHat.wav', 
+  'S': 'Rim Shot.wav', 
+  'D': 'Snare.wav',
+  'Z': 'Tamb 1.wav',
+  'X': 'Motorway.mp3',
+  'C': 'FX.mp3'
 }
 
 class App extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-
+      isPowerOn: true,
+      bank1: true,
+      mostRecentAudio: ""
     }
     this.handlePadClick = this.handlePadClick.bind(this);
+    this.handlePowerSliderClick = this.handlePowerSliderClick.bind(this);
+    this.handleDisplaySliderClick = this.handleDisplaySliderClick.bind(this);
   }
 
   handlePadClick (event) {
-    window.document.getElementById(keyMap[event.target.id]).play();
+    if (this.state.isPowerOn) {
+      window.document.getElementById(event.target.id).children[0].play();
+      this.setState({mostRecentAudio: keyMap1[event.target.id.split("")[0]] });
+    }
+  }
+
+  handlePowerSliderClick () {
+    this.setState(function (state) {return {isPowerOn: !state.isPowerOn}});   
+  }
+
+  handleDisplaySliderClick () {
+    this.setState(function (state) {return {bank1: !state.bank1}});
   }
 
   render () {
     return  (
       <div id = "drum-machine">
         <div id = "pads">
-          {keys.toUpperCase().split("").map((elem, index) => <div onClick = {this.handlePadClick} className = "drum-pad" key = {index} id = {elem}>{elem}</div>)}
+          {keys.toUpperCase().split("").map((elem, index) => <div onClick = {this.handlePadClick} className = "drum-pad" key = {index} id = {elem + "p"}>{elem}
+            <audio id = {elem} className = "clip"  src = {"Samples/" + keyMap1[elem]} /> 
+          </div>)}
         </div>
         <div id = "buttons">
-          <Slider heading = "Power" /> 
-          <Slider heading = "Bank" />
+          <Slider heading = "Power" sliderOn = {this.state.isPowerOn} sliderClick = {this.handlePowerSliderClick}/> 
+          <Slider heading = "Bank" sliderOn = {this.state.bank1} sliderClick = {this.handleDisplaySliderClick}/>
           <div id = "displayUnit">
-            <div id = "displayHeader"> Display:
-            </div>
-            <div id = "display"></div>
+            <div id = "displayHeader"> Display:</div>
+            <div id = "display">{this.state.mostRecentAudio}</div>
           </div>
         </div>
       </div>
@@ -63,17 +75,17 @@ class App extends React.Component {
   }
 }
 
-window.onkeydown = (event) => {
+window.addEventListener("keydown", function (event) {
   if (keys.split("").indexOf(event.key.toLowerCase()) !== -1) {
-    document.getElementById(event.key.toUpperCase()).click();
-    document.getElementById(event.key.toUpperCase()).style.backgroundColor = "blue";
+    this.document.getElementById(event.key.toUpperCase() + "p").click();
+    this.document.getElementById(event.key.toUpperCase() + "p").style.backgroundColor = "rgb(76, 76, 165)";
   }
-}
+});
 
-window.onkeyup = (event) => {
+window.addEventListener("keyup", function (event) {
   if (keys.split("").indexOf(event.key.toLowerCase()) !== -1) {
-    document.getElementById(event.key.toUpperCase()).style.backgroundColor = "rgb(178, 179, 185)";
+    this.document.getElementById(event.key.toUpperCase() + "p").style.backgroundColor = "rgb(137, 137, 143)";
   }
-}
+});
 
 export default App;
