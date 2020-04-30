@@ -44,3 +44,38 @@ html, body {
   width: 50%;
   padding: 2vw;
 }
+.slider {
+  background: firebrick;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 1vh;
+}
+.sliderHeader {
+  background: yellow;
+  width: 50%;
+  height: 100%;
+  text-align: center;
+}
+.sliderBar {
+  background: rgb(35, 165, 35);
+  width: 10%;
+  height: 1.2vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  border-radius: 25%;
+  cursor: pointer;
+}
+.power-off {
+  background: grey;
+  justify-content: flex-start;
+}
+.sliderCircle {
+  width: 1vw;
+  height: 1vw;
+  background: floralwhite;
+  border-radius: 50%;
+  border: rgb(66, 62, 62) 0.5px solid;
+}
