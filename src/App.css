@@ -7,13 +7,13 @@ html, body {
 #root {
   height: 100%;
   width: 100%;
-  /* background: yellow; */
   margin: 0;
   border: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background: black;
 }
 #drum-machine {
   width: 60vw;
