@@ -75,12 +75,12 @@ html, body {
 .sliderBar {
   background: rgb(35, 165, 35);
   width: 10%;
-  height: 1.2vw;
+  height: 1vw;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  border-radius: 35%;
+  border-radius: 40%;
   cursor: pointer;
 }
 .power-off {

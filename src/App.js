@@ -26,6 +26,18 @@ let keyMap1 = {
   'C': 'FX.mp3'
 }
 
+let keyMap2 = {
+  'Q': 'acoustic/clap-analog.wav',
+  'W': 'acoustic/crash-acoustic.wav',
+  'E': 'acoustic/hihat-acoustic02.wav',
+  'A': 'acoustic/kick-classic.wav', 
+  'S': 'acoustic/openhat-acoustic01.wav', 
+  'D': 'acoustic/perc-tribal.wav',
+  'Z': 'acoustic/ride-acoustic01.wav',
+  'X': 'acoustic/shaker-analog.wav',
+  'C': 'acoustic/snare-analog.wav'
+}
+
 class App extends React.Component {
   constructor (props) {
     super(props);
@@ -42,7 +54,11 @@ class App extends React.Component {
   handlePadClick (event) {
     if (this.state.isPowerOn) {
       window.document.getElementById(event.target.id).children[0].play();
-      this.setState({mostRecentAudio: keyMap1[event.target.id.split("")[0]] });
+      if (this.state.bank1) {
+        this.setState({mostRecentAudio: keyMap1[event.target.id.split("")[0]] });
+      } else {
+        this.setState({mostRecentAudio: keyMap2[event.target.id.split("")[0]] });
+      }
     }
   }
 
@@ -57,6 +73,7 @@ class App extends React.Component {
 
   handleBankSliderClick () {
     this.setState(function (state) {return {bank1: !state.bank1}});
+    console.log(this.state.bank1);
   }
 
   render () {
@@ -64,7 +81,7 @@ class App extends React.Component {
       <div id = "drum-machine">
         <div id = "pads">
           {keys.toUpperCase().split("").map((elem, index) => <div onClick = {this.handlePadClick} className = "drum-pad" key = {index} id = {elem + "p"}>{elem}
-            <audio id = {elem} className = "clip"  src = {"Samples/" + keyMap1[elem]} /> 
+            <audio id = {elem} className = "clip"  src = {this.state.bank1?("Samples/" + keyMap1[elem]):("Samples/" + keyMap2[elem])} /> 
           </div>)}
         </div>
         <div id = "buttons">
