@@ -36,9 +36,19 @@ html, body {
   padding: 2vw;
   text-align: center;
   cursor: pointer;
+  box-shadow: 0 0 3px 3px #222121;
 }
 .drum-pad:active {
   background: rgb(76, 76, 165) !important;
+  transform: translate(-1px, -1px);
+  box-shadow: none;
+  border-style: none; 
+}
+.pressed {
+  background: rgb(76, 76, 165) !important;
+  transform: translate(-1px, -1px);
+  box-shadow: none;
+  border-style: none; 
 }
 #buttons {
   /* background: blue; */

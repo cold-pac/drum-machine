@@ -36,7 +36,7 @@ class App extends React.Component {
     }
     this.handlePadClick = this.handlePadClick.bind(this);
     this.handlePowerSliderClick = this.handlePowerSliderClick.bind(this);
-    this.handleDisplaySliderClick = this.handleDisplaySliderClick.bind(this);
+    this.handleBankSliderClick = this.handleBankSliderClick.bind(this);
   }
 
   handlePadClick (event) {
@@ -47,10 +47,15 @@ class App extends React.Component {
   }
 
   handlePowerSliderClick () {
-    this.setState(function (state) {return {isPowerOn: !state.isPowerOn, mostRecentAudio: "Power Off"}});   
+    this.setState(function (state) {return {isPowerOn: !state.isPowerOn}}); 
+    if (this.state.isPowerOn) {
+      this.setState({mostRecentAudio: "Power Off"})
+    } else {
+      this.setState({mostRecentAudio: ""});
+    }
   }
 
-  handleDisplaySliderClick () {
+  handleBankSliderClick () {
     this.setState(function (state) {return {bank1: !state.bank1}});
   }
 
@@ -64,9 +69,9 @@ class App extends React.Component {
         </div>
         <div id = "buttons">
           <Slider heading = "Power" sliderOn = {this.state.isPowerOn} sliderClick = {this.handlePowerSliderClick}/> 
-          <Slider heading = "Bank" sliderOn = {this.state.bank1} sliderClick = {this.handleDisplaySliderClick}/>
+          <Slider heading = "Bank" sliderOn = {this.state.bank1} sliderClick = {this.handleBankSliderClick}/>
           <div id = "displayUnit">
-            <div id = "displayHeader"> Display:</div>
+            <div id = "displayHeader">Display</div>
             <div id = "display">{this.state.mostRecentAudio}</div>
           </div>
         </div>
@@ -78,13 +83,13 @@ class App extends React.Component {
 window.addEventListener("keydown", function (event) {
   if (keys.split("").indexOf(event.key.toLowerCase()) !== -1) {
     this.document.getElementById(event.key.toUpperCase() + "p").click();
-    this.document.getElementById(event.key.toUpperCase() + "p").style.backgroundColor = "rgb(76, 76, 165)";
+    this.document.getElementById(event.key.toUpperCase() + "p").classList.add("pressed");
   }
 });
 
 window.addEventListener("keyup", function (event) {
   if (keys.split("").indexOf(event.key.toLowerCase()) !== -1) {
-    this.document.getElementById(event.key.toUpperCase() + "p").style.backgroundColor = "rgb(137, 137, 143)";
+    this.document.getElementById(event.key.toUpperCase() + "p").classList.remove("pressed");
   }
 });
 
