@@ -53,6 +53,8 @@ class App extends React.Component {
 
   handlePadClick (event) {
     if (this.state.isPowerOn) {
+      window.document.getElementById(event.target.id).children[0].pause();
+      window.document.getElementById(event.target.id).children[0].currentTime = 0;
       window.document.getElementById(event.target.id).children[0].play();
       if (this.state.bank1) {
         this.setState({mostRecentAudio: keyMap1[event.target.id.split("")[0]] });
