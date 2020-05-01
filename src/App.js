@@ -47,7 +47,7 @@ class App extends React.Component {
   }
 
   handlePowerSliderClick () {
-    this.setState(function (state) {return {isPowerOn: !state.isPowerOn}});   
+    this.setState(function (state) {return {isPowerOn: !state.isPowerOn, mostRecentAudio: "Power Off"}});   
   }
 
   handleDisplaySliderClick () {
